@@ -1,0 +1,29 @@
+<p>
+    <?php
+    /** @var CustomBlock $block */
+
+    use Magento\Framework\Exception\LocalizedException;
+    use Magento\Framework\Exception\NoSuchEntityException;
+    use RltSquare\RegularPriceDiscountShow\Block\CustomBlock;
+
+    $discountAmount = null;
+
+    try {
+        $discountAmount = $block->getDiscountedPrice();
+    } catch (NoSuchEntityException|LocalizedException $e) {
+    }
+
+    if ($discountAmount > 0) {
+    $formattedDiscountAmount = number_format($discountAmount, 2); // Format to 2 decimal places
+
+    // Add a dollar sign ('$') to the formatted amount
+    $formattedDiscountAmountWithSymbol = '$' . $formattedDiscountAmount;
+    ?>
+    <div class="custom-discount-block" style="color: green;">
+        <span class="label"><?php echo __('Special Price Discount Amount:') ?></span>
+        <span class="price"><?php echo $formattedDiscountAmountWithSymbol ?></span>
+    </div>
+    <?php
+    }
+    ?>
+</p>
